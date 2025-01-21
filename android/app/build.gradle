@@ -7,8 +7,9 @@ plugins {
 
 android {
     namespace = "com.example.saturne_todo_app_djamo"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34//flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -24,16 +25,19 @@ android {
         applicationId = "com.example.saturne_todo_app_djamo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 21//flutter.minSdkVersion
+        targetSdk = 34//flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        minSdkVersion 21
+        targetSdkVersion 34 // Utilisez la même version que compileSdkVersion
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+         
             signingConfig = signingConfigs.debug
         }
     }

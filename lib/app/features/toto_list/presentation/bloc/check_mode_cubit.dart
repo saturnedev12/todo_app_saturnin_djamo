@@ -62,6 +62,11 @@ class CheckModeCubit extends Cubit<CheckModeState> {
   removeCheck(BuildContext context) {
     context
         .read<TaskListCubit>()
-        .deleteMultipleTasks(CheckModeState.listTaskIndex);
+        .deleteMultipleTasks(CheckModeState.listTaskIndex)
+        .then(
+      (value) {
+        initialization();
+      },
+    );
   }
 }

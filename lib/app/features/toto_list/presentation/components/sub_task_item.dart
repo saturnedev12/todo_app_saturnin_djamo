@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -87,74 +89,40 @@ class _SubTaskItemState extends State<SubTaskItem> {
         },
       ),
       contentPadding: EdgeInsets.only(right: 0, left: 15),
-      trailing: PopupMenuButton<int>(
-        icon: const Icon(Icons.more_vert), // Icône du bouton
-        onSelected: (value) {
-          switch (value) {
-            case 0:
-              // Action pour "Promote to task"
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Promote to task selected')),
-              );
-              break;
-            case 1:
-              AlertDialog(
-                title: const Text('Supprimer la sous tâche'),
-                content: const Text(
-                    'Êtes-vous sûr de vouloir supprimer cette sous tâche ?'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text('Annuler'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      subTaskLogic.delete(subTaskModel: widget.subTaskModel);
-                      Navigator.of(context).pop(true);
-                    },
-                    child: const Text('Supprimer'),
-                  ),
-                ],
-              );
+      trailing: IconButton(
+        iconSize: 18,
+        onPressed: () async {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: const Text('Supprimer la sous tâche'),
+                    content: const Text(
+                        'Êtes-vous sûr de vouloir supprimer cette sous tâche ?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: const Text('Annuler'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await subTaskLogic.isarConfig.instance.writeTxn(
+                            () async {
+                              await subTaskLogic
+                                  .isarConfig.instance.subTaskModels
+                                  .delete(widget.subTaskModel.id);
+                            },
+                          );
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Delete step selected')),
-              );
-              break;
-          }
+                          Navigator.of(context).pop(true);
+                        },
+                        child: const Text('Supprimer'),
+                      ),
+                    ],
+                  ));
         },
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 0,
-            child: Row(
-              children: const [
-                Icon(Icons.add,
-                    color: Colors.black), // Icône pour "Promote to task"
-                SizedBox(width: 8),
-                Text('Promote to task'),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: 1,
-            child: Row(
-              children: [
-                Icon(FontAwesomeIcons.trashCan,
-                    color: Colors.red), // Icône pour "Delete step"
-                SizedBox(width: 8),
-                Text(
-                  'Supprimer tâche',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.red),
-                ),
-              ],
-            ),
-          ),
-        ],
+        icon: Icon(FontAwesomeIcons.trashCan, color: Colors.red),
       ),
     );
   }
