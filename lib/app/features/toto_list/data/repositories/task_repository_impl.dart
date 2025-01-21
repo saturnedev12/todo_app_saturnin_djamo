@@ -1,48 +1,49 @@
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
+import 'package:saturne_todo_app_djamo/app/core/config/isar_config.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/task_model.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/domain/entities/task_entity.dart';
 
 import '../../domain/repositories/task_repository.dart';
 
-@LazySingleton(as: TaskRepository)
+@Singleton(as: TaskRepository)
 class TaskRepositoryImpl implements TaskRepository {
-  final Isar _isar;
+  final IsarConfig _isarConfig;
 
-  TaskRepositoryImpl(this._isar);
+  TaskRepositoryImpl(this._isarConfig);
 
   @override
   Future<List<TaskEntity>> getAllTasks() async {
-    final tasks = await _isar.taskModels.where().findAll();
+    final tasks = await _isarConfig.instance.taskModels.where().findAll();
     return tasks.map((e) => e.toEntity()).toList();
   }
 
   @override
   Future<TaskEntity?> getTaskById(int id) async {
-    final task = await _isar.taskModels.get(id);
+    final task = await _isarConfig.instance.taskModels.get(id);
     return task?.toEntity();
   }
 
   @override
   Future<void> addTask(TaskEntity task) async {
     final taskModel = task.toModel();
-    await _isar.writeTxn(() async {
-      await _isar.taskModels.put(taskModel);
+    await _isarConfig.instance.writeTxn(() async {
+      await _isarConfig.instance.taskModels.put(taskModel);
     });
   }
 
   @override
   Future<void> updateTask(TaskEntity task) async {
     final taskModel = task.toModel();
-    await _isar.writeTxn(() async {
-      await _isar.taskModels.put(taskModel);
+    await _isarConfig.instance.writeTxn(() async {
+      await _isarConfig.instance.taskModels.put(taskModel);
     });
   }
 
   @override
   Future<void> deleteTask(int id) async {
-    await _isar.writeTxn(() async {
-      await _isar.taskModels.delete(id);
+    await _isarConfig.instance.writeTxn(() async {
+      await _isarConfig.instance.taskModels.delete(id);
     });
   }
 }
@@ -59,7 +60,7 @@ extension TaskModelMapper on TaskModel {
 
 extension TaskEntityMapper on TaskEntity {
   TaskModel toModel() => TaskModel()
-    ..id = id
+    ..id = id ?? Isar.autoIncrement
     ..title = title
     ..description = description
     ..isCompleted = isCompleted

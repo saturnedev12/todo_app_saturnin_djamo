@@ -9,5 +9,6 @@ final getIt = GetIt.instance;
 @InjectableInit()
 Future<void> configureDependencies() async {
   getIt.init();
-  await getIt<IsarConfig>().init(); // Initialisation de Isar
+  await getIt<IsarConfig>().init();
+  // await getIt<EnvHandler>().init();
 }

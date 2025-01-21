@@ -8,5 +8,6 @@ class TaskModel {
   late String title;
   String? description;
   late bool isCompleted;
+  String? priority;
   DateTime createdAt = DateTime.now();
 }

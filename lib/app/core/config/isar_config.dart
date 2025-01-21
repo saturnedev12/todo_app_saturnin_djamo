@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/sub_task_model.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/task_model.dart';
 
 @singleton
@@ -11,7 +12,7 @@ class IsarConfig {
   Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
-      [TaskModelSchema],
+      [TaskModelSchema, SubTaskModelSchema],
       directory: dir.path,
     );
   }

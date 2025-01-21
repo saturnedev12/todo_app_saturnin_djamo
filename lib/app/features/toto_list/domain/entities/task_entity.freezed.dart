@@ -20,7 +20,7 @@ TaskEntity _$TaskEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TaskEntity {
-  int get id => throw _privateConstructorUsedError; // Identifiant unique
+  int? get id => throw _privateConstructorUsedError; // Identifiant unique
   String get title => throw _privateConstructorUsedError; // Titre de la tâche
   String? get description =>
       throw _privateConstructorUsedError; // Description optionnelle
@@ -41,7 +41,7 @@ abstract class $TaskEntityCopyWith<$Res> {
       _$TaskEntityCopyWithImpl<$Res, TaskEntity>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String? description,
       bool isCompleted,
@@ -61,17 +61,17 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
     Object? isCompleted = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -101,7 +101,7 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String? description,
       bool isCompleted,
@@ -119,17 +119,17 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
     Object? isCompleted = null,
     Object? createdAt = null,
   }) {
     return _then(_$TaskEntityImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -154,7 +154,7 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TaskEntityImpl implements _TaskEntity {
   _$TaskEntityImpl(
-      {required this.id,
+      {this.id,
       required this.title,
       this.description,
       required this.isCompleted,
@@ -164,7 +164,7 @@ class _$TaskEntityImpl implements _TaskEntity {
       _$$TaskEntityImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
 // Identifiant unique
   @override
   final String title;
@@ -219,7 +219,7 @@ class _$TaskEntityImpl implements _TaskEntity {
 
 abstract class _TaskEntity implements TaskEntity {
   factory _TaskEntity(
-      {required final int id,
+      {final int? id,
       required final String title,
       final String? description,
       required final bool isCompleted,
@@ -229,7 +229,7 @@ abstract class _TaskEntity implements TaskEntity {
       _$TaskEntityImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override // Identifiant unique
   String get title;
   @override // Titre de la tâche

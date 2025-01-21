@@ -6,7 +6,7 @@ part 'task_entity.g.dart';
 class TaskEntity with _$TaskEntity {
   /// Constructeur principal avec les propriétés nécessaires
   factory TaskEntity({
-    required int id, // Identifiant unique
+    int? id, // Identifiant unique
     required String title, // Titre de la tâche
     String? description, // Description optionnelle
     required bool isCompleted, // Statut de complétion
