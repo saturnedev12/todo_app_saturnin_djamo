@@ -28,13 +28,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   void initState() {
     super.initState();
     textEditingController = TextEditingController(text: widget.taskModel.title);
-    // _focusNode.addListener(
-    //   () {
-    //     if (!_focusNode.hasFocus) {
-    //       //Navigator.pop(context);
-    //     }
-    //   },
-    // );
   }
 
   @override
@@ -58,7 +51,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               ),
               SliverToBoxAdapter(
                 child: ListTile(
-                  // isThreeLine: true,
+                  tileColor: Theme.of(context).scaffoldBackgroundColor,
                   titleAlignment: ListTileTitleAlignment.top,
                   minLeadingWidth: 0,
                   horizontalTitleGap: 0,
@@ -97,6 +90,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             ? TextDecoration.lineThrough
                             : null),
                     decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         border: Border.all(style: BorderStyle.none)),
                     onChanged: (value) {
                       context.read<TaskListCubit>().updateTask(TaskEntity(
@@ -147,7 +141,51 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               children: [
                 Text(timeago.format(widget.taskModel.createdAt)),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Supprimer la tâche'),
+                          content: const Text(
+                              'Êtes-vous sûr de vouloir supprimer cette tâche ?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: const Text('Annuler'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<TaskListCubit>()
+                                    .deleteTask(widget.taskModel.id)
+                                    .then(
+                                  (value) {
+                                    // ignore: use_build_context_synchronously
+                                    if (Navigator.of(context).canPop()) {
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.of(context).pop(true);
+                                    }
+                                  },
+                                );
+                              },
+                              child: const Text('Supprimer'),
+                            ),
+                          ],
+                        );
+                      },
+                    ).then(
+                      (value) {
+                        if (value == true) {
+                          if (Navigator.of(context).canPop()) {
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      },
+                    );
+                  },
                   icon: Icon(FontAwesomeIcons.trashCan),
                   color: Colors.red,
                 )

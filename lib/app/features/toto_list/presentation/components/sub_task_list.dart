@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 import 'package:saturne_todo_app_djamo/app/core/config/injectable_config.dart';
-import 'package:saturne_todo_app_djamo/app/core/config/isar_config.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/sub_task_model.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/task_model.dart';
+import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/sub_task_logic.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/components/sub_task_item.dart';
 
 class ListSubTask extends StatefulWidget {
@@ -17,36 +14,25 @@ class ListSubTask extends StatefulWidget {
 }
 
 class _ListSubTaskState extends State<ListSubTask> {
-  late final Isar _isar;
-  late final Stream<List<SubTaskModel>> _subTasks;
-  late final StreamSubscription
-      _taskSubscription; // Pour fermer manuellement si nécessaire
+  final subTaskLogic = getIt<SubTaskLogic>();
 
   @override
   void initState() {
     super.initState();
-    _isar = getIt<IsarConfig>().instance;
-    _subTasks = _isar.subTaskModels
-        .where()
-        .idTaskEqualTo(widget.taskModel.id)
-        .watch(fireImmediately: true)
-        .asBroadcastStream();
-    _taskSubscription = _subTasks.listen((tasks) {
-      debugPrint('Tâches mises à jour : ${tasks.map((e) => e.title).toList()}');
-    });
+    subTaskLogic.initList(taskModel: widget.taskModel);
   }
 
   @override
   void dispose() {
     // Fermer le stream dans dispose
-    _taskSubscription.cancel();
+    subTaskLogic.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<SubTaskModel>>(
-      stream: _subTasks,
+      stream: subTaskLogic.subTasks,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SliverToBoxAdapter(
@@ -75,15 +61,3 @@ class _ListSubTaskState extends State<ListSubTask> {
     );
   }
 }
-  // onPressed: () async {
-  //         // Ajouter une nouvelle tâche
-  //         final newTask = TaskModel()
-  //           ..title = 'Nouvelle tâche'
-  //           ..description = 'Description par défaut'
-  //           ..isCompleted = false
-  //           ..createdAt = DateTime.now();
-
-  //         await _isar.writeTxn(() async {
-  //           await _isar.taskModels.put(newTask);
-  //         });
-  //       },

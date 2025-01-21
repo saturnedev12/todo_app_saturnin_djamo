@@ -46,6 +46,23 @@ class TaskRepositoryImpl implements TaskRepository {
       await _isarConfig.instance.taskModels.delete(id);
     });
   }
+
+  @override
+  Future<void> deleteTasks(List<int> ids) async {
+    await _isarConfig.instance.writeTxn(() async {
+      for (final id in ids) {
+        await _isarConfig.instance.taskModels.delete(id);
+      }
+    });
+  }
+
+  @override
+  Future<void> deleteAllTasks() async {
+    await _isarConfig.instance.writeTxn(() async {
+      await _isarConfig.instance.taskModels
+          .clear(); // Supprime toutes les tâches
+    });
+  }
 }
 
 extension TaskModelMapper on TaskModel {

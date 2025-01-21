@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:saturne_todo_app_djamo/app/core/config/injectable_config.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/data/models/task_model.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/domain/entities/task_entity.dart';
@@ -38,7 +37,6 @@ class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor('#F0F5FA'),
       body: StreamBuilder<List<TaskModel>>(
         stream: taskListLogic.taskStream,
         builder: (context, snapshot) {
@@ -49,47 +47,56 @@ class _TaskListPageState extends State<TaskListPage> {
           if (snapshot.hasError) {
             return Center(child: Text('Erreur : ${snapshot.error}'));
           }
-          taskListLogic.pagingController.refresh();
-          // final tasks = snapshot.data ?? [];
 
-          // if (tasks.isEmpty) {
-          //   return const Center(
-          //     child: Text('Aucune tâche trouvée.'),
-          //   );
-          // }
+          final tasks = snapshot.data ?? [];
 
-          return CustomScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            slivers: [
-              SliverGap(10),
-              PagedSliverList<int, TaskModel>(
-                pagingController: taskListLogic.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<TaskModel>(
-                  itemBuilder: (context, task, index) => TaskItem(task: task),
-                  noItemsFoundIndicatorBuilder: (context) => const Center(
-                    child: Text('Aucune tâche trouvée.'),
+          if (tasks.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Icon(
+                      FontAwesomeIcons.boxArchive,
+                      size: 80,
+                      color: Colors.grey,
+                    ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => const Center(
-                    child: Text('Erreur lors du chargement des données.'),
+                  Text(
+                    'Aucun éléments',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Theme.of(context).primaryColor),
                   ),
-                  newPageErrorIndicatorBuilder: (context) => const Center(
-                    child:
-                        Text('Erreur lors du chargement de la page suivante.'),
+                  const Gap(10),
+                  Text(
+                    "Vous n'avez aucune tâche en cours, veuillez ajouter de nouvelles tâches.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  firstPageProgressIndicatorBuilder: (context) =>
-                      const Center(child: CircularProgressIndicator()),
-                  newPageProgressIndicatorBuilder: (context) =>
-                      const Center(child: CircularProgressIndicator()),
-                ),
+                ],
               ),
-            ],
+            );
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+              return TaskItem(task: task);
+            },
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-            backgroundColor: Colors.white,
             context: context,
             builder: (context) => AddTaskCompoent(),
           ).then(
@@ -100,7 +107,10 @@ class _TaskListPageState extends State<TaskListPage> {
             },
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

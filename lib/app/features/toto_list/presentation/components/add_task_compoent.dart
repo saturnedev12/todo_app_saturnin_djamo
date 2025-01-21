@@ -50,10 +50,6 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
           Navigator.of(context).pop();
         });
       }
-
-      // Future.delayed(Duration(seconds: 3), () {
-      //   Navigator.of(context).pop();
-      // });
     }
 
     _keyboardHeight = currentKeyboardHeight; //
@@ -70,6 +66,9 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
               textInputAction: TextInputAction.done,
               autofocus: true,
               placeholder: 'Entrez une tâche',
+              style: TextStyle(
+                  color: Theme.of(context).listTileTheme.textColor,
+                  fontSize: 16),
               decoration:
                   BoxDecoration(border: Border.all(style: BorderStyle.none)),
               onEditingComplete: () {
@@ -86,13 +85,20 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
             ),
           ),
           Row(
-            spacing: 8,
+            spacing: 4,
             children: [
-              IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.bell)),
               IconButton(
-                  onPressed: () {}, icon: Icon(FontAwesomeIcons.alignLeft)),
+                  onPressed: () {},
+                  icon: Icon(
+                    CupertinoIcons.bell,
+                    size: 18,
+                  )),
               IconButton(
-                  onPressed: () {}, icon: Icon(FontAwesomeIcons.palette)),
+                  onPressed: () {},
+                  icon: Icon(FontAwesomeIcons.noteSticky, size: 18)),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(FontAwesomeIcons.palette, size: 18)),
             ],
           ),
           Gap(MediaQuery.of(context).viewInsets.bottom)

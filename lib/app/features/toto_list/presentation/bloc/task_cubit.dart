@@ -49,6 +49,28 @@ class TaskListCubit extends Cubit<TaskListState> {
     }
   }
 
+  /// Supprimer plusieurs tâches
+  Future<void> deleteMultipleTasks(List<int> ids) async {
+    emit(const TaskListState.loading());
+    try {
+      await _taskRepository.deleteTasks(ids);
+      await fetchTasks();
+    } catch (e) {
+      emit(TaskListState.error(e.toString())); // Gestion des erreurs
+    }
+  }
+
+  /// Supprimer plusieurs tâches
+  Future<void> deleteAllTasks() async {
+    emit(const TaskListState.loading());
+    try {
+      await _taskRepository.deleteAllTasks();
+      await fetchTasks();
+    } catch (e) {
+      emit(TaskListState.error(e.toString())); // Gestion des erreurs
+    }
+  }
+
   /// Mettre à jour une tâche
   Future<void> updateTask(TaskEntity task) async {
     emit(const TaskListState.loading());
