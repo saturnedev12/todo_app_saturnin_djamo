@@ -54,39 +54,37 @@ class _TaskListPageState extends State<TaskListPage> {
           final tasks = snapshot.data ?? [];
 
           if (tasks.isEmpty) {
-            return Expanded(
-              child: Center(
-                //padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(
-                        FontAwesomeIcons.boxArchive,
-                        size: 80,
-                        color: Colors.grey,
-                      ),
+            return Center(
+              //padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: Icon(
+                      FontAwesomeIcons.boxArchive,
+                      size: 80,
+                      color: Colors.grey,
                     ),
-                    AutoSizeText(
-                      'Aucun éléments',
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    const Gap(10),
-                    AutoSizeText(
-                      maxLines: 1,
-                      "Vous n'avez aucune tâche en cours, veuillez ajouter de nouvelles tâches.",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
+                  ),
+                  AutoSizeText(
+                    'Aucun éléments',
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  ),
+                  const Gap(10),
+                  AutoSizeText(
+                    maxLines: 2,
+                    "Vous n'avez aucune tâche en cours, veuillez ajouter de nouvelles tâches.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
               ),
             );
           }
