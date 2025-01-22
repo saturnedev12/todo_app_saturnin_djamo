@@ -1,16 +1,27 @@
-# saturne_todo_app_djamo
+# 📱 Djama Flutter Test Project
 
-A new Flutter project.
+## 🎥 Demo Video
 
-## Getting Started
+[![Watch the video](https://img.youtube.com/vi/EXOUkE7qwzRytV6ZomK4/0.jpg)](https://jumpshare.com/embed/EXOUkE7qwzRytV6ZomK4)
 
-This project is a starting point for a Flutter application.
+## 🚀 Overview
 
-A few resources to get you started if this is your first Flutter project:
+This is a Flutter project developed as a test for **Djamo**. The project follows **Clean Architecture**, integrating:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Isar** for local database management.
+- **Bloc** for state management.
+- **Dependency Injection** using **Injectable** and **GetIt**.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📂 Project Structure
+
+...
+(Le reste de l'arborescence est inchangé)
+...
+
+## 🛠 Technologies Used
+
+- **Flutter** (Dart)
+- **Isar** (Local Database)
+- **Bloc** (State Management)
+- **Injectable & GetIt** (Dependency Injection)
+- **Clean Architecture**
