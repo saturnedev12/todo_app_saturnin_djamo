@@ -33,7 +33,6 @@ class TaskListCubit extends Cubit<TaskListState> {
       await _taskRepository.addTask(task);
       await fetchTasks(); // Rafraîchir la liste des tâches
     } catch (e) {
-      inspect(e);
       emit(TaskListState.error(e.toString()));
     }
   }

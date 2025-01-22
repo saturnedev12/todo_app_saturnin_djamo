@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:saturne_todo_app_djamo/app/core/config/injectable_config.dart';
+import 'package:saturne_todo_app_djamo/app/core/utils/theme_handler.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/bloc/theme_bloc.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/select_button.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/select_handler.dart';
@@ -16,6 +19,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final themeHandler = getIt<ThemeHandler>();
+  @override
+  void initState() {
+    () {
+      themeHandler.getSavedTheme().then(
+        (value) {
+          context.read<ThemeBloc>().add(ThemeEvent(value));
+        },
+      );
+    }();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -28,18 +45,30 @@ class _HomePageState extends State<HomePage> {
                 BlocBuilder<ThemeBloc, ThemeState>(
                   builder: (context, state) {
                     // Détermine le nouveau thème à appliquer
-                    final isDarkMode = state.themeType == ThemeType.dark;
-                    final newThemeType =
-                        isDarkMode ? ThemeType.light : ThemeType.dark;
+                    final currentTheme = state.themeType;
 
                     return IconButton(
                       onPressed: () {
-                        // Ajoute l'événement pour changer le thème
+                        late ThemeType newThemeType;
+                        if (currentTheme == ThemeType.light) {
+                          newThemeType = ThemeType.dark;
+                        } else if (currentTheme == ThemeType.dark) {
+                          newThemeType = ThemeType.system;
+                        } else if (currentTheme == ThemeType.system) {
+                          newThemeType = ThemeType.light;
+                        }
+
                         context.read<ThemeBloc>().add(ThemeEvent(newThemeType));
                       },
                       icon: Icon(
-                        isDarkMode ? Icons.wb_sunny : Icons.nights_stay,
-                        color: isDarkMode ? Colors.yellow : Colors.blueGrey,
+                        (currentTheme == ThemeType.dark)
+                            ? Icons.wb_sunny
+                            : (currentTheme == ThemeType.light)
+                                ? Icons.nights_stay
+                                : CupertinoIcons.gear,
+                        color: (currentTheme == ThemeType.dark)
+                            ? Colors.yellow
+                            : Colors.blueGrey,
                         size: 25,
                       ),
                     );

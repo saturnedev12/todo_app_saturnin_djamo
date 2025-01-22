@@ -124,7 +124,6 @@ class TaskItem extends StatelessWidget {
           },
           trailing: BlocBuilder<CheckModeCubit, CheckModeState>(
             builder: (context, state) {
-              inspect(state);
               return (state is CHECK_TASK_LIST)
                   ? Checkbox(
                       value: state.listTaskIndex.contains(task.id),

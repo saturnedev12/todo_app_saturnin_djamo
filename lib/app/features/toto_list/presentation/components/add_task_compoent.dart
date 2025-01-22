@@ -20,7 +20,6 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     textEditingController = TextEditingController();
     _focusNode.addListener(
