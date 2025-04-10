@@ -98,6 +98,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             title: value,
                             isCompleted: widget.taskModel.isCompleted,
                             createdAt: widget.taskModel.createdAt,
+                            color: widget.taskModel.color,
                           ));
                     },
                     onEditingComplete: () {
@@ -106,6 +107,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             title: textEditingController.text,
                             isCompleted: widget.taskModel.isCompleted,
                             createdAt: widget.taskModel.createdAt,
+                            color: widget.taskModel.color,
                           ));
                     },
                   ),

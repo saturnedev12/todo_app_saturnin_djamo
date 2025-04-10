@@ -9,5 +9,7 @@ class TaskModel {
   String? description;
   late bool isCompleted;
   String? priority;
+
+  String? color;
   DateTime createdAt = DateTime.now();
 }

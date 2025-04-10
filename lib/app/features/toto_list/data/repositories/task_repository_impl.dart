@@ -72,12 +72,14 @@ extension TaskModelMapper on TaskModel {
         description: description,
         isCompleted: isCompleted,
         createdAt: createdAt,
+        color: color,
       );
 }
 
 extension TaskEntityMapper on TaskEntity {
   TaskModel toModel() => TaskModel()
     ..id = id ?? Isar.autoIncrement
+    ..color = color
     ..title = title
     ..description = description
     ..isCompleted = isCompleted

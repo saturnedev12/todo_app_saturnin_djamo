@@ -9,6 +9,8 @@ class TaskEntity with _$TaskEntity {
     int? id, // Identifiant unique
     required String title, // Titre de la tâche
     String? description, // Description optionnelle
+    String? color,
+    DateTime? reminder, // Rappel optionnel
     required bool isCompleted, // Statut de complétion
     required DateTime createdAt, // Date de création
   }) = _TaskEntity;

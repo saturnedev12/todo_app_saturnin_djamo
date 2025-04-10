@@ -1,0 +1,2 @@
+/Users/macpro/WORKSPACE/saturne_todo_app_djamo/android/app/.cxx/Debug/5jq551u2/x86_64/CMakeFiles/edit_cache.dir
+/Users/macpro/WORKSPACE/saturne_todo_app_djamo/android/app/.cxx/Debug/5jq551u2/x86_64/CMakeFiles/rebuild_cache.dir

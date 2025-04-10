@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:saturne_todo_app_djamo/app/core/config/injectable_config.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/bloc/theme_bloc.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/pages/home_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
             darkTheme:
                 (state.themeType == ThemeType.system) ? ThemeData.dark() : null,
             home: const HomePage(),
+            builder: EasyLoading.init(),
           );
         },
       ),

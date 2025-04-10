@@ -11,6 +11,7 @@ import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/check_mode_state.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/task_cubit.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/task_list_logic.dart';
+import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/components/priority_color_selector.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/screens/task_detail_screen.dart';
 
 class TaskItem extends StatelessWidget {
@@ -24,7 +25,11 @@ class TaskItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10).copyWith(bottom: 6),
       decoration: BoxDecoration(
-        color: theme.cardColor, // Utilise la couleur de carte du thème
+        color: (task.color == PriorityColor.important.name)
+            ? Colors.red
+            : (task.color == PriorityColor.warning.name)
+                ? Colors.orange
+                : theme.cardColor, // Utilise la couleur de carte du thème
         borderRadius: BorderRadius.circular(20),
       ),
       child: Dismissible(
@@ -51,12 +56,12 @@ class TaskItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        key: Key(task.id.toString()),
         onDismissed: (direction) {
           if (direction.name == DismissDirection.endToStart.name) {
             context.read<TaskListCubit>().deleteTask(task.id);
           }
         },
+        key: Key(task.id.toString()),
         confirmDismiss: (direction) {
           return showDialog(
             context: context,

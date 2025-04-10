@@ -1,0 +1,1 @@
+/Users/macpro/WORKSPACE/saturne_todo_app_djamo/build/app/intermediates/cxx/RelWithDebInfo/4d4j63z3/obj/x86_64

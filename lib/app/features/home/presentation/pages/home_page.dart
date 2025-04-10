@@ -6,6 +6,7 @@ import 'package:saturne_todo_app_djamo/app/core/utils/theme_handler.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/bloc/theme_bloc.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/select_button.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/select_handler.dart';
+import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/select_theme_button.dart';
 import 'package:saturne_todo_app_djamo/app/features/home/presentation/components/task_progress_bar.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/check_mode_cubit.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/bloc/check_mode_state.dart';
@@ -42,38 +43,7 @@ class _HomePageState extends State<HomePage> {
               title: const Text('Liste des tâches'),
               actions: [
                 SelectButton(),
-                BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (context, state) {
-                    // Détermine le nouveau thème à appliquer
-                    final currentTheme = state.themeType;
-
-                    return IconButton(
-                      onPressed: () {
-                        late ThemeType newThemeType;
-                        if (currentTheme == ThemeType.light) {
-                          newThemeType = ThemeType.dark;
-                        } else if (currentTheme == ThemeType.dark) {
-                          newThemeType = ThemeType.system;
-                        } else if (currentTheme == ThemeType.system) {
-                          newThemeType = ThemeType.light;
-                        }
-
-                        context.read<ThemeBloc>().add(ThemeEvent(newThemeType));
-                      },
-                      icon: Icon(
-                        (currentTheme == ThemeType.dark)
-                            ? Icons.wb_sunny
-                            : (currentTheme == ThemeType.light)
-                                ? Icons.nights_stay
-                                : CupertinoIcons.gear,
-                        color: (currentTheme == ThemeType.dark)
-                            ? Colors.yellow
-                            : Colors.blueGrey,
-                        size: 25,
-                      ),
-                    );
-                  },
-                ),
+                SelectThemeButton(),
               ],
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(50),

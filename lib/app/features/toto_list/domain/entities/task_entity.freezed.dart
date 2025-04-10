@@ -24,6 +24,9 @@ mixin _$TaskEntity {
   String get title => throw _privateConstructorUsedError; // Titre de la tâche
   String? get description =>
       throw _privateConstructorUsedError; // Description optionnelle
+  String? get color => throw _privateConstructorUsedError;
+  DateTime? get reminder =>
+      throw _privateConstructorUsedError; // Rappel optionnel
   bool get isCompleted =>
       throw _privateConstructorUsedError; // Statut de complétion
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -44,6 +47,8 @@ abstract class $TaskEntityCopyWith<$Res> {
       {int? id,
       String title,
       String? description,
+      String? color,
+      DateTime? reminder,
       bool isCompleted,
       DateTime createdAt});
 }
@@ -64,6 +69,8 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
+    Object? color = freezed,
+    Object? reminder = freezed,
     Object? isCompleted = null,
     Object? createdAt = null,
   }) {
@@ -80,6 +87,14 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reminder: freezed == reminder
+          ? _value.reminder
+          : reminder // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -104,6 +119,8 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       {int? id,
       String title,
       String? description,
+      String? color,
+      DateTime? reminder,
       bool isCompleted,
       DateTime createdAt});
 }
@@ -122,6 +139,8 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
+    Object? color = freezed,
+    Object? reminder = freezed,
     Object? isCompleted = null,
     Object? createdAt = null,
   }) {
@@ -138,6 +157,14 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reminder: freezed == reminder
+          ? _value.reminder
+          : reminder // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
           : isCompleted // ignore: cast_nullable_to_non_nullable
@@ -157,6 +184,8 @@ class _$TaskEntityImpl implements _TaskEntity {
       {this.id,
       required this.title,
       this.description,
+      this.color,
+      this.reminder,
       required this.isCompleted,
       required this.createdAt});
 
@@ -173,6 +202,11 @@ class _$TaskEntityImpl implements _TaskEntity {
   final String? description;
 // Description optionnelle
   @override
+  final String? color;
+  @override
+  final DateTime? reminder;
+// Rappel optionnel
+  @override
   final bool isCompleted;
 // Statut de complétion
   @override
@@ -180,7 +214,7 @@ class _$TaskEntityImpl implements _TaskEntity {
 
   @override
   String toString() {
-    return 'TaskEntity(id: $id, title: $title, description: $description, isCompleted: $isCompleted, createdAt: $createdAt)';
+    return 'TaskEntity(id: $id, title: $title, description: $description, color: $color, reminder: $reminder, isCompleted: $isCompleted, createdAt: $createdAt)';
   }
 
   @override
@@ -192,6 +226,9 @@ class _$TaskEntityImpl implements _TaskEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.reminder, reminder) ||
+                other.reminder == reminder) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted) &&
             (identical(other.createdAt, createdAt) ||
@@ -200,8 +237,8 @@ class _$TaskEntityImpl implements _TaskEntity {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, description, isCompleted, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, title, description, color,
+      reminder, isCompleted, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -222,6 +259,8 @@ abstract class _TaskEntity implements TaskEntity {
       {final int? id,
       required final String title,
       final String? description,
+      final String? color,
+      final DateTime? reminder,
       required final bool isCompleted,
       required final DateTime createdAt}) = _$TaskEntityImpl;
 
@@ -235,6 +274,10 @@ abstract class _TaskEntity implements TaskEntity {
   @override // Titre de la tâche
   String? get description;
   @override // Description optionnelle
+  String? get color;
+  @override
+  DateTime? get reminder;
+  @override // Rappel optionnel
   bool get isCompleted;
   @override // Statut de complétion
   DateTime get createdAt;

@@ -68,6 +68,7 @@ class _AddSubTaskCompoentState extends State<AddSubTaskCompoent> {
         textInputAction: TextInputAction.done,
         // autofocus: true,
         placeholder: 'Entrez une sous tâche',
+        style: TextStyle(color: Theme.of(context).listTileTheme.textColor),
         placeholderStyle: Theme.of(context)
             .textTheme
             .bodyLarge!

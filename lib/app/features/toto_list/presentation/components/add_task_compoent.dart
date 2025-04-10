@@ -2,9 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gap/gap.dart';
 import 'package:saturne_todo_app_djamo/app/features/toto_list/domain/entities/task_entity.dart';
+import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/components/priority_color_selector.dart';
+import 'package:saturne_todo_app_djamo/app/features/toto_list/presentation/components/reminder_picker.dart';
+
+bool isPopupClosingManually = true;
 
 class AddTaskCompoent extends StatefulWidget {
   const AddTaskCompoent({super.key});
@@ -17,7 +21,8 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
   final FocusNode _focusNode = FocusNode();
   late TextEditingController textEditingController;
   double _keyboardHeight = 0.0;
-
+  PriorityColor? currentColor = PriorityColor.none;
+  DateTime? reminderDateTime;
   @override
   void initState() {
     super.initState();
@@ -33,7 +38,6 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     textEditingController.dispose();
   }
@@ -42,7 +46,9 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
   Widget build(BuildContext context) {
     // Vérifie la hauteur du clavier en temps réel
     double currentKeyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-    if (currentKeyboardHeight == 0 && _keyboardHeight > 0) {
+    if (currentKeyboardHeight == 0 &&
+        _keyboardHeight > 0 &&
+        isPopupClosingManually) {
       // Le clavier vient de disparaître
       if (Navigator.of(context).canPop()) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -73,31 +79,50 @@ class _AddTaskCompoentState extends State<AddTaskCompoent> {
               onEditingComplete: () {
                 log('DONE');
                 if (textEditingController.text.isNotEmpty) {
+                  // if (reminderDateTime != null) {
+                  //   await ReminderService.scheduleReminder(
+                  //     id: 1,
+                  //     title: 'Tâche à faire',
+                  //     body: textEditingController.text,
+                  //     dateTime: reminderDateTime!,
+                  //   );
+                  // }
                   Navigator.pop(
                       context,
                       TaskEntity(
                           title: textEditingController.text,
                           isCompleted: false,
+                          color: currentColor!.name,
+                          reminder: reminderDateTime,
                           createdAt: DateTime.now()));
+                } else {
+                  EasyLoading.showToast(
+                    'Veuillez entrer une tâche',
+                    toastPosition: EasyLoadingToastPosition.top,
+                    duration: const Duration(seconds: 2),
+                    //maskType: EasyLoadingMaskType.black,
+                  );
                 }
               },
             ),
           ),
           Row(
-            spacing: 4,
             children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    CupertinoIcons.bell,
-                    size: 18,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(FontAwesomeIcons.noteSticky, size: 18)),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(FontAwesomeIcons.palette, size: 18)),
+              Gap(10),
+              ReminderPicker(
+                onChanged: (value) {
+                  log('Reminder: $value');
+                  reminderDateTime = value;
+                },
+              ),
+              Gap(5),
+              PriorityColorSelector(
+                onChanged: (value) {
+                  if (value != null) {
+                    currentColor = value;
+                  }
+                },
+              )
             ],
           ),
           Gap(MediaQuery.of(context).viewInsets.bottom)

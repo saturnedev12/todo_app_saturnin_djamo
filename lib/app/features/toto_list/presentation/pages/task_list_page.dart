@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -56,35 +57,38 @@ class _TaskListPageState extends State<TaskListPage> {
           if (tasks.isEmpty) {
             return Center(
               //padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Icon(
-                      FontAwesomeIcons.boxArchive,
-                      size: 80,
-                      color: Colors.grey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Icon(
+                        FontAwesomeIcons.boxArchive,
+                        size: 80,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  AutoSizeText(
-                    'Aucun éléments',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                  const Gap(10),
-                  AutoSizeText(
-                    maxLines: 2,
-                    "Vous n'avez aucune tâche en cours, veuillez ajouter de nouvelles tâches.",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+                    AutoSizeText(
+                      'Aucun éléments',
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    const Gap(10),
+                    AutoSizeText(
+                      maxLines: 2,
+                      "Vous n'avez aucune tâche en cours, veuillez ajouter de nouvelles tâches.",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
               ),
             );
           }
