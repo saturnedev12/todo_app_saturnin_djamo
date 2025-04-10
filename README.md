@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://iili.io/3arDrzl.png" alt="Aperçu de l'application" width="300" style="border-radius: 200px;" />
+</p>
+
 # 📱 Application Todo – Test Technique Flutter pour Djamo
 
 ## 🌍 Contexte
@@ -127,7 +131,7 @@ Le projet suit la **Clean Architecture**, basée sur le [cours de ResoCoder](htt
 
 ## 📱 Captures d’écran
 
-> _(Ajoutez ici une ou deux captures si vous en avez)_
+![Aperçu de l'application](https://iili.io/3arLdQt.gif)
 
 ---
 
